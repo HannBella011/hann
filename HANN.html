@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Animated Hearts -->
+    <div class="hearts-container">
+        <div class="heart heart-1">♥</div>
+        <div class="heart heart-2">♥</div>
+        <div class="heart heart-3">♥</div>
+        <div class="heart heart-4">♥</div>
+        <div class="heart heart-5">♥</div>
+        <div class="heart heart-6">♥</div>
+    </div>
+
+    <!-- Interactive Greeting Screen -->
+    <div class="greeting-screen" id="greeting-screen">
+        <div class="greeting-content">
+            <h1 class="greeting-text" id="greeting-text"></h1>
+            <div class="options-container" id="options-container" style="display: none;">
+                <button class="option-box" id="yes-option">Yes</button>
+                <button class="option-box" id="no-option">No</button>
+            </div>
+            <div class="creator-name" id="creator-name" style="display: none;">
+                BY HANN BELLA
+            </div>
+        </div>
+    </div>
+
+    <!-- Letter Paper (initially hidden) -->
+    <div class="letter-paper" id="letter-paper" style="display: none;">
+        <div class="paper-content">
+            <div class="letter-text" id="typewriter-text"></div>
+        </div>
+    </div>
+
+    <script>
+        // Greeting interaction
+        const greetingText = "Hi Good Morning! Are you okay?";
+        const greetingElement = document.getElementById('greeting-text');
+        const optionsContainer = document.getElementById('options-container');
+        const creatorName = document.getElementById('creator-name');
+        const greetingScreen = document.getElementById('greeting-screen');
+        const letterPaper = document.getElementById('letter-paper');
+        const yesOption = document.getElementById('yes-option');
+        const noOption = document.getElementById('no-option');
+        
+        let greetingIndex = 0;
+
+        // Typewriter effect for greeting
+        function typeGreeting() {
+            if (greetingIndex < greetingText.length) {
+                greetingElement.textContent += greetingText.charAt(greetingIndex);
+                greetingIndex++;
+                setTimeout(typeGreeting, 80);
+            } else {
+                // Show options after greeting is complete
+                setTimeout(() => {
+                    optionsContainer.style.display = 'flex';
+                    // Show creator name after options appear
+                    setTimeout(() => {
+                        creatorName.style.display = 'block';
+                    }, 300);
+                }, 500);
+            }
+        }
+
+        // Handle option clicks
+        function handleOptionClick() {
+            // Hide greeting screen with fade out
+            greetingScreen.style.transition = 'opacity 0.5s ease-out';
+            greetingScreen.style.opacity = '0';
+            
+            setTimeout(() => {
+                greetingScreen.style.display = 'none';
+                letterPaper.style.display = 'block';
+                letterPaper.style.opacity = '0';
+                letterPaper.style.transition = 'opacity 0.5s ease-in';
+                
+                setTimeout(() => {
+                    letterPaper.style.opacity = '1';
+                    startLetterTyping();
+                }, 100);
+            }, 500);
+        }
+
+        // Letter typing functionality
+        const text = `Hi,
+
+I just want to remind you that today is special—because you are in it.
+
+No matter how small, the things you do each day make a difference.
+
+Your smile, your kindness, and just your presence can make someone's day better.
+
+So I hope today gives you reasons to smile, and I hope you never forget how important you are.
+
+You deserve happiness, peace, and love.
+
+Wishing you a truly special day!
+
+With kindness,
+Hannah Bella`;
+
+        const typewriterElement = document.getElementById('typewriter-text');
+        let letterIndex = 0;
+
+        function typeWriter() {
+            if (letterIndex < text.length) {
+                typewriterElement.textContent += text.charAt(letterIndex);
+                letterIndex++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        function startLetterTyping() {
+            setTimeout(typeWriter, 1000);
+        }
+
+        // Event listeners
+        yesOption.addEventListener('click', handleOptionClick);
+        noOption.addEventListener('click', handleOptionClick);
+
+        // Start greeting animation after page load
+        setTimeout(typeGreeting, 1000);
+    </script>
+</body>
+</html>
